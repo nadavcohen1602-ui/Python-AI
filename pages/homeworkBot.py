@@ -1,6 +1,8 @@
 import streamlit as st
-from helper import * #תביא את כל הפונקציות מהקובץ המשותף
+from streamlit import image
 
+from helper import * #תביא את כל הפונקציות מהקובץ המשותף
+import PIL.Image
 st.set_page_config(
     page_title="בוט שיעורי בית",
     page_icon="🤓"
@@ -50,10 +52,15 @@ for line in history:
 #מקום להקליד
 user = st.chat_input("ההודעה שלך...")
 
+image_button = st.file_uploader("העלאת תמונה", type["png","jpg","jpeg"])
+
 if user: #אם יש הודעה
 
     showMessage("user",user)
     #שולפים את ההיסטוריה
+    if image_button:
+        image = PIL.Image.open(image_button)
+
 
     save_to_history("homework","user",user)
     history = st.session_state["homework"]["history"]

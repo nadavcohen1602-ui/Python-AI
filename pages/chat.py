@@ -3,6 +3,8 @@ from dotenv import load_dotenv  #הספריה שפונה לקובץ env
 from google import genai # Generative Ai = בינה מלאכותית יוצרת
 import streamlit as st  #הספרייה של הGUI - הנראות
 
+from helper import loadAPIKey
+
 st.title("הצ'אט שלי") #כותרת
 
 #הגדרות
@@ -12,8 +14,9 @@ st.set_page_config(
 )
 
 load_dotenv()  #לטעון את הסביבה
+#API_KEY = os.getenv("API_KEY") #לטעון את המשתנה
 
-API_KEY = os.getenv("API_KEY") #לטעון את המשתנה
+API_KEY = loadAPIKey()
 
 #gemini = genai.Client(api_key=API_KEY) #יוצרים לקוח לAPI - שולחים לו את המזהה שלנו
 

@@ -41,13 +41,19 @@ all_models = [
 def createClient():
     st.session_state.client = genai.Client(api_key=loadAPIKey()) #יוצרים לקוח של ג'מיני
 
-def sendMessage(text,system_prompt,history=[]):
+def sendMessage(text,system_prompt,history=[],image = None):
     if 'client' not in st.session_state: #אם לא יצרת חיבור
         createClient()
 
     for model in all_models: #עבור על כל המודלים
         client = st.session_state.client
         try: #מנסה
+            content = [text]
+            if image:
+                content.append(image)
+
+
+
             chat = client.chats.create( #יוצר צ'אט
                 model = model,
                 history = history, #ההיסטוריה ששלחנו
@@ -58,7 +64,7 @@ def sendMessage(text,system_prompt,history=[]):
                 )
             )
 
-            ai = chat.send_message(text)  #שליחת הודעה
+            ai = chat.send_message(content)  #שליחת הודעה
             print(ai)
             print(ai.text)  #הדפסת תשובה
             return ai.text #תחזיר את התשובה
